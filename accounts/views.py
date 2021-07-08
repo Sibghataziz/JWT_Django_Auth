@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 local="127.0.0.1:8000"
-server=""
+server="jwtintership.herokuapp.com"
 token=""
 def register_view(request):
     if request.method == "POST":
@@ -41,7 +41,7 @@ def login_view(request):
             "username": user.username,
             "password" : Password
             }
-            link=f"http://{local}/obtaintoken/"
+            link=f"http://{server}/obtaintoken/"
             status=requests.post(link,json=data)
             if status.status_code==200:
                 token=status.text.split(",")
@@ -79,7 +79,7 @@ def home_view(request):
         return redirect('login')
 
 def verify(request):
-    link=f"http://{local}/verifytoken/"
+    link=f"http://{server}/verifytoken/"
     data={
     "token": request.COOKIES['access']
     }
